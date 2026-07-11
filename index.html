@@ -2148,6 +2148,34 @@
         z-index: 25 !important; /* Knob layer is on the top of the door frame */
       }
 
+
+      /* Mobile Apparel Diamond Overrides */
+      .mobile-apparel-diamond {
+        display: none;
+      }
+      @media (max-width: 767px) {
+        .mobile-apparel-diamond {
+          display: block;
+          position: absolute;
+          left: 50%;
+          top: 48%;
+          width: clamp(72px, 28vw, 120px);
+          height: auto;
+          transform: translate(-50%, -50%);
+          opacity: 0.9;
+          z-index: 12;
+          pointer-events: none;
+          object-fit: contain;
+        }
+        .inner-garment {
+          display: none !important;
+        }
+      }
+      .glass-case-container.case-open .mobile-apparel-diamond {
+        transform: translate(-50%, -50%) scale(1.04);
+        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+
       /* Title Diamond Sparkle Animation */
       @keyframes diamondSparkle {
         0%, 100% {
@@ -2283,6 +2311,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2363,6 +2393,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2443,6 +2475,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2523,6 +2557,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2602,6 +2638,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2682,6 +2720,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2762,6 +2802,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2841,6 +2883,8 @@
                   </svg>
                 </div>
               </div>
+              <!-- Mobile-only stable diamond layer -->
+              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
