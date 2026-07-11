@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIAMONDFAM コレクション - KWTWORKS HOMIES GALLERY</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="DIAMONDFAM COLLECTION - KWTWORKS HOMIESがお届けするプレミアムアパレルエキシビション。洗練された技術とラグジュアリーな展示。">
+  <meta name="keywords" content="アパレル, DIAMONDFAM, KWTWORKS, ラグジュアリーファッション, ギャラリー, 展示">
+  <meta name="author" content="KWTWORKS HOMIES">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Config Customizations -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: {
+              light: '#e8d8b8',
+              DEFAULT: '#bba370',
+              bright: '#d9bf8f',
+              dark: '#8c764c',
+              deep: '#5c4b2b',
+            },
+            tattooBlack: {
+              950: '#050505',
+              900: '#0a0a0a',
+              850: '#121212',
+              800: '#1a1a1a',
+            }
+          },
+          fontFamily: {
+            cinzel: ['"Cinzel"', 'serif'],
+            cinzelDeco: ['"Cinzel Decorative"', 'serif'],
+            montserrat: ['"Montserrat"', 'sans-serif'],
+            garamond: ['"Cormorant Garamond"', 'serif'],
+          },
+          letterSpacing: {
+            ultra: '0.25em',
+            mega: '0.4em',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Typography & Global CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap');
+
+    body {
+      background-color: #050505;
+      color: #e5e7eb;
+      font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Elegant luxury thin scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #bba370;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #d9bf8f;
+    }
+
+    /* Ornate borders mimicking traditional frames */
+    .ornate-border {
+      position: relative;
+    }
+    .ornate-border::before {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      border: 1px solid rgba(187, 163, 112, 0.25);
+      pointer-events: none;
+    }
+
+    /* Premium item image hover scale and spotlight effect */
+    .product-card {
+      scroll-margin-top: 120px;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease;
+      background: linear-gradient(180deg, #0e0e0e 0%, #030303 100%);
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(187, 163, 112, 0.12), 0 0 1px rgba(187, 163, 112, 0.3);
+      border-color: rgba(187, 163, 112, 0.4);
+    }
+    .product-card img {
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+    }
+    .product-card:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+    }
+
+    /* Highlight pulse animation for selected card anchors */
+    @keyframes highlightPulse {
+      0%, 100% {
+        border-color: rgba(187, 163, 112, 0.35);
+        box-shadow: none;
+      }
+      50% {
+        border-color: rgba(199, 160, 90, 1);
+        box-shadow: 0 0 20px rgba(199, 160, 90, 0.4), inset 0 0 10px rgba(199, 160, 90, 0.1);
+      }
+    }
+    .highlight-target {
+      animation: highlightPulse 2s ease-in-out 3;
+    }
+
+    /* Title Diamond Sparkle Animation */
+    @keyframes diamondSparkle {
+      0%, 100% {
+        filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4)) brightness(0.95);
+        opacity: 0.85;
+        transform: scale(1);
+      }
+      50% {
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9)) brightness(1.4) contrast(1.1);
+        opacity: 1;
+        transform: scale(1.08);
+      }
+    }
+    .animate-diamond-sparkle {
+      animation: diamondSparkle 3.2s ease-in-out infinite;
+      display: inline-block;
+    }
+  </style>
+  <style>
+    /* Hide Cart elements during Coming Soon */
+    button[onclick="toggleCartDrawer(true)"],
+    #cart-badge,
+    #cart-overlay,
+    #cart-drawer,
+    a[href="./checkout.html"] {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between bg-[#050505] selection:bg-gold/30 selection:text-white">
+
+  <!-- Elegant Top Header & Navigation -->
+  <header class="w-full py-6 px-4 md:px-8 border-b border-zinc-900 bg-black/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <!-- Back to Top Page button -->
+      <a href="./index.html" class="flex items-center gap-2 group text-xs text-zinc-400 hover:text-gold tracking-[0.2em] font-cinzel transition-colors duration-300">
+        <span class="transform group-hover:-translate-x-1.5 transition-transform duration-300">←</span>
+        <span>スタジオに戻る</span>
+      </a>
+
+      <!-- Brand Logo / Identity -->
+      <a href="./index.html" class="font-cinzel text-sm sm:text-base tracking-[0.3em] font-semibold text-white hover:text-gold transition-colors duration-300">
+        HOMIES GALLERY
+      </a>
+      
+      <!-- Cart Icon Trigger -->
+      <button onclick="toggleCartDrawer(true)" class="relative flex items-center justify-center text-white hover:text-[#e8d8b8] transition-colors duration-300 focus:outline-none w-10 h-10 group">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-[26px] h-[26px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+        </svg>
+        <span id="cart-badge" class="bg-[#C7A05A] text-black font-bold text-[10px] w-[20px] h-[20px] rounded-full flex items-center justify-center absolute -top-1 -right-1 border border-black shadow-[0_2px_5px_rgba(0,0,0,0.3)] transform scale-0 transition-transform duration-300">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow w-full max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20">
+    
+    <!-- DIAMONDFAM COLLECTION Header -->
+    <div class="flex flex-col items-center justify-center text-center mb-16 md:mb-24">
+      <!-- Ornate Top Divider -->
+      <div class="flex items-center gap-4 mb-4 opacity-80 w-full max-w-[300px]">
+        <div class="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C7A05A] to-transparent"></div>
+        <img src="real_diamond.png" alt="Diamond Accent" class="w-6 h-6 object-contain animate-diamond-sparkle">
+        <div class="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C7A05A] to-transparent"></div>
+      </div>
+
+      <h1 class="font-cinzel text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[0.25em] text-white uppercase">
+        DIAMONDFAM
+      </h1>
+      <p class="text-xs text-gold tracking-[0.4em] uppercase mt-2">コレクション</p>
+
+      <!-- Ornate Bottom Divider -->
+      <div class="flex items-center gap-4 mt-6 opacity-80 w-full max-w-[300px]">
+        <div class="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C7A05A] to-transparent"></div>
+        <img src="real_diamond.png" alt="Diamond Accent" class="w-6 h-6 object-contain animate-diamond-sparkle">
+        <div class="flex-grow h-[1px] bg-gradient-to-r from-transparent via-[#C7A05A] to-transparent"></div>
+      </div>
+    </div>
+
+    <!-- Product Grid: 4cols PC, 3cols Tablet, 2cols Mobile -->
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
+      
+      <!-- Product 1: White Tee -->
+      <div id="white-tee" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: White Tee -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">トップス / アパレル</span>
+            <div class="cursor-default">
+              <!-- Original Name: WHITE TEE -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: 重厚感のある最高級コットンを採用。Diamondfam独自のチェストグラフィックを美しく落とし込んだ一着。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2: Black Tee -->
+      <div id="black-tee" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Black Tee -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">トップス / アパレル</span>
+            <div class="cursor-default">
+              <!-- Original Name: BLACK TEE -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: ブラシテクスチャを加えたプレミアムな質感 of 黒生地に、クラシックで洗練されたカッティングを採用。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3: Sweat -->
+      <div id="sweat" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Sweat -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">トップス / アパレル</span>
+            <div class="cursor-default">
+              <!-- Original Name: SWEAT -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: 厚手のフレンチテリー起毛を採用。真鍮製ジッパーのディテールとドロップショルダーの極上シルエット。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4: Setup -->
+      <div id="setup" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Setup -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">セットアップ / アパレル</span>
+            <div class="cursor-default">
+              <!-- Original Name: SETUP -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: 仕立ての良いダブルブレストジャケットと、ウールブレンドの快適なリラックスパンツの極上セット。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 5: Hoodie -->
+      <div id="hoodie" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Hoodie -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">アウター / アパレル</span>
+            <div class="cursor-default">
+              <!-- Original Name: HOODIE -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: 肉厚な2重フード構造と高耐久リブを採用。高密度の刺繍シグネチャーを施した贅沢な一着。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 6: Cap -->
+      <div id="cap" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Cap -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">ヘッドウェア / アクセサリー</span>
+            <div class="cursor-default">
+              <!-- Original Name: CAP -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: アジャスタブルな金属クラスプ仕様。スタジオエンブレムを立体感のある刺繍で表現。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="FREE">FREE</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 7: Socks -->
+      <div id="socks" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Socks -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">ソックス / アクセサリー</span>
+            <div class="cursor-default">
+              <!-- Original Name: SOCKS -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: 快適な履き心地を提供する上質な梳毛コットン。足首にダイヤモンド刺繍アクセント。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="M (25-27cm)">M (25-27cm)</option>
+                <option value="L (27-29cm)">L (27-29cm)</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 8: Beanie -->
+      <div id="beanie" class="product-card border border-zinc-800 p-2 md:p-3 flex flex-col justify-between">
+        <div class="relative block overflow-hidden aspect-[3/4] bg-black/40 shadow-[inset_0_0_15px_rgba(0,0,0,0.9)] cursor-default select-none">
+          <!-- Original Image: Beanie -->
+          <img src="real_diamond.png" alt="Coming Soon" class="w-full h-full object-contain p-10 md:p-12 opacity-60 animate-diamond-sparkle">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+        </div>
+        <div class="mt-4 flex flex-col items-start px-1 flex-grow justify-between">
+          <div>
+            <span class="text-[9px] text-[#C7A05A] font-medium tracking-widest uppercase">ヘッドウェア / アクセサリー</span>
+            <div class="cursor-default">
+              <!-- Original Name: BEANIE -->
+              <h2 class="font-cinzel text-sm text-white/90 tracking-widest mt-1 uppercase">COMING SOON</h2>
+            </div>
+            <!-- Original Desc: 極細のウール糸を使用したリブニット。優れた保温性と極上のフィット感。 --><p class="text-[10px] text-zinc-400 mt-2 font-light leading-relaxed">Original Apparel Collection<br>Coming Soon.</p>
+          </div>
+          
+          <div class="w-full mt-4 space-y-2">
+            <!-- Size Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">サイズ</span>
+              <select class="product-size bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="FREE">FREE</option>
+              </select>
+            </div>
+            <!-- Quantity Select -->
+            <div class="flex items-center justify-between w-full">
+              <span class="text-[9px] text-zinc-500 tracking-wider">数量</span>
+              <select class="product-qty bg-[#0a0a0a] border border-zinc-800 text-[10px] text-zinc-300 py-1.5 px-2 focus:outline-none focus:border-gold">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <!-- Add to Cart -->
+            <button disabled class="w-full mt-2 py-2 text-center border border-zinc-800 text-zinc-600 bg-transparent text-[9px] tracking-wider font-semibold cursor-not-allowed">Coming Soon</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Smooth Hash Target Scroll & Luxury Highlight Script -->
+    <script>
+      function checkHashAndHighlight() {
+        const hash = window.location.hash;
+        if (hash) {
+          const targetElement = document.querySelector(hash);
+          if (targetElement) {
+            // Remove previous highlights
+            document.querySelectorAll('.product-card').forEach(card => {
+              card.classList.remove('highlight-target');
+            });
+            
+            // Scroll to the card and trigger smooth gold spotlight highlight
+            setTimeout(() => {
+              targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              targetElement.classList.add('highlight-target');
+            }, 300);
+          }
+        }
+      }
+
+      window.addEventListener('hashchange', checkHashAndHighlight);
+      window.addEventListener('DOMContentLoaded', checkHashAndHighlight);
+    </script>
+  </main>
+
+  <!-- Cart Sidebar Drawer Overlay -->
+  <div id="cart-overlay" onclick="toggleCartDrawer(false)" class="fixed inset-0 bg-black/70 z-50 opacity-0 pointer-events-none transition-opacity duration-500"></div>
+
+  <!-- Cart Sidebar Drawer Panel -->
+  <div id="cart-drawer" class="fixed top-0 right-0 bottom-0 w-full max-w-[420px] bg-[#0c0c0c] border-l border-zinc-800 shadow-[0_0_40px_rgba(0,0,0,0.8)] z-50 translate-x-full transition-transform duration-500 flex flex-col justify-between">
+    <!-- Header -->
+    <div class="p-6 border-b border-zinc-900 flex items-center justify-between">
+      <h2 class="font-cinzel text-base tracking-[0.2em] text-white">ショッピングカート</h2>
+      <button onclick="toggleCartDrawer(false)" class="text-zinc-400 hover:text-gold text-xs tracking-widest font-cinzel focus:outline-none">閉じる</button>
+    </div>
+
+    <!-- Scrollable Items Area -->
+    <div id="cart-items-container" class="flex-grow p-6 overflow-y-auto space-y-4">
+      <!-- Dynamic list of items will render here -->
+    </div>
+
+    <!-- Footer Summary and Action -->
+    <div class="p-6 border-t border-zinc-900 bg-black/40 space-y-4">
+      <div class="flex items-center justify-between text-sm">
+        <span class="tracking-widest text-zinc-400 font-medium">小計</span>
+        <span id="cart-subtotal" class="font-cinzel tracking-widest text-gold font-bold">ASK</span>
+      </div>
+      <p class="text-[10px] text-zinc-500 leading-normal">
+        配送料等は注文手続き時に計算されます。セキュリティのため、本番の決済処理は無効化されています。
+      </p>
+      <a href="./checkout.html" class="block w-full py-4 text-center border border-[#C7A05A]/45 bg-gradient-to-r from-[#C7A05A] to-[#d9bf8f] text-black text-xs font-bold tracking-[0.25em] transition-all duration-300 hover:shadow-[0_0_15px_rgba(187,163,112,0.3)]">
+        購入手続きへ
+      </a>
+    </div>
+  </div>
+
+  <!-- Cart Operations Script -->
+  <script>
+    let cart = [];
+
+    function loadCart() {
+      const savedCart = localStorage.getItem('diamondfam_cart');
+      if (savedCart) {
+        try {
+          cart = JSON.parse(savedCart);
+        } catch(e) {
+          cart = [];
+        }
+      }
+      updateCartUI();
+    }
+
+    function saveCart() {
+      localStorage.setItem('diamondfam_cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function addToBag(name, imgUrl, button) {
+      const card = button.closest('.product-card');
+      const size = card.querySelector('.product-size').value;
+      const qty = parseInt(card.querySelector('.product-qty').value);
+
+      const existingItem = cart.find(item => item.name === name && item.size === size);
+      if (existingItem) {
+        existingItem.qty += qty;
+      } else {
+        cart.push({
+          name: name,
+          img: imgUrl,
+          size: size,
+          qty: qty
+        });
+      }
+
+      saveCart();
+      toggleCartDrawer(true);
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      saveCart();
+    }
+
+    function updateQty(index, newQty) {
+      if (newQty <= 0) {
+        removeFromCart(index);
+      } else {
+        cart[index].qty = parseInt(newQty);
+        saveCart();
+      }
+    }
+
+    function toggleCartDrawer(open) {
+      const overlay = document.getElementById('cart-overlay');
+      const drawer = document.getElementById('cart-drawer');
+      if (open) {
+        overlay.classList.remove('pointer-events-none');
+        overlay.classList.remove('opacity-0');
+        overlay.classList.add('opacity-100');
+        drawer.classList.remove('translate-x-full');
+      } else {
+        overlay.classList.add('pointer-events-none');
+        overlay.classList.remove('opacity-100');
+        overlay.classList.add('opacity-0');
+        drawer.classList.add('translate-x-full');
+      }
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cart-badge');
+      const container = document.getElementById('cart-items-container');
+      const totalCount = cart.reduce((total, item) => total + item.qty, 0);
+
+      // Badge update
+      if (totalCount > 0) {
+        badge.textContent = totalCount;
+        badge.classList.remove('scale-0');
+        badge.classList.add('scale-100');
+      } else {
+        badge.classList.remove('scale-100');
+        badge.classList.add('scale-0');
+      }
+
+      // Render items
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-full text-center py-20 text-zinc-500">
+            <span class="text-xs tracking-widest font-semibold">カートは空です</span>
+            <span class="text-[9px] uppercase mt-2">アパレル商品をカートに追加してください。</span>
+          </div>
+        `;
+      } else {
+        container.innerHTML = cart.map((item, idx) => `
+          <div class="flex items-center gap-4 bg-[#0a0a0a] p-3 border border-zinc-900 rounded-sm">
+            <img src="${item.img}" class="w-12 h-16 object-cover border border-zinc-900" alt="${item.name}">
+            <div class="flex-grow flex flex-col justify-between">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-cinzel text-xs text-white tracking-widest uppercase">${item.name}</h4>
+                  <p class="text-[9px] text-zinc-500 mt-0.5">サイズ: ${item.size}</p>
+                </div>
+                <button onclick="removeFromCart(${idx})" class="text-[9px] text-red-500/70 hover:text-red-400 tracking-wider">削除</button>
+              </div>
+              <div class="flex items-center justify-between mt-2">
+                <div class="flex items-center gap-2 border border-zinc-800 px-1">
+                  <button onclick="updateQty(${idx}, ${item.qty - 1})" class="text-zinc-500 hover:text-white px-1 text-xs">-</button>
+                  <span class="text-[10px] text-zinc-300 px-1 font-semibold">${item.qty}</span>
+                  <button onclick="updateQty(${idx}, ${item.qty + 1})" class="text-zinc-500 hover:text-white px-1 text-xs">+</button>
+                </div>
+                <span class="font-cinzel text-[10px] text-gold font-bold">ASK</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // Initialize Cart
+    loadCart();
+  </script>
+
+  <!-- Footer -->
+  <footer class="w-full py-8 border-t border-zinc-900 bg-black text-center mt-12">
+    <p class="text-[10px] text-zinc-500 tracking-widest uppercase">
+      &copy; 2026 KWTWORKS HOMIES. ALL RIGHTS RESERVED.
+    </p>
+  </footer>
+
+</body>
+</html>
