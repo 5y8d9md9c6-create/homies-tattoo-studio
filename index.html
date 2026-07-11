@@ -3856,6 +3856,8 @@
       <script>
         document.addEventListener('DOMContentLoaded', () => {
           const flowVideos = document.querySelectorAll('.contact-video-card video');
+          const marqueeContainer = document.querySelector('.contact-video-flow');
+          const marqueeTrack = document.querySelector('.contact-video-track');
           
           // Force mute attributes in JavaScript for secure iOS Autoplay compatibility
           flowVideos.forEach(v => {
@@ -3866,50 +3868,65 @@
             });
           });
 
-          // High-Performance IntersectionObserver for individual videos (reduces CPU/decode load on mobile)
-          const videoObserver = new IntersectionObserver((entries) => {
+          // Single IntersectionObserver for the entire marquee container (prevents intermediate pausing)
+          const sectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-              const video = entry.target;
               if (entry.isIntersecting) {
-                // Play only when visible on screen
-                if (video.readyState >= 2) {
-                  video.play().catch(() => {});
-                } else {
-                  const playOnLoad = () => {
-                    video.play().catch(() => {});
-                    video.removeEventListener('canplay', playOnLoad);
-                    video.removeEventListener('loadeddata', playOnLoad);
-                  };
-                  video.addEventListener('canplay', playOnLoad);
-                  video.addEventListener('loadeddata', playOnLoad);
+                // Play all videos in the track
+                flowVideos.forEach(v => {
+                  if (v.readyState >= 2) {
+                    v.play().catch(() => {});
+                  } else {
+                    const playOnLoad = () => {
+                      v.play().catch(() => {});
+                      v.removeEventListener('canplay', playOnLoad);
+                      v.removeEventListener('loadeddata', playOnLoad);
+                    };
+                    v.addEventListener('canplay', playOnLoad);
+                    v.addEventListener('loadeddata', playOnLoad);
+                  }
+                });
+                
+                // Ensure marquee runs
+                if (marqueeTrack) {
+                  marqueeTrack.style.animationPlayState = 'running';
                 }
               } else {
-                // Pause instantly when scrolled out of view to free hardware decoder resources
-                video.pause();
+                // Pause all videos when entire contact section leaves screen
+                flowVideos.forEach(v => {
+                  v.pause();
+                });
+                
+                // Pause marquee animation to save resources when completely off-screen
+                if (marqueeTrack) {
+                  marqueeTrack.style.animationPlayState = 'paused';
+                }
               }
             });
           }, {
             root: null, // relative to device viewport
-            rootMargin: '100px', // start decoding/playing slightly before entering viewport
-            threshold: 0.05
+            rootMargin: '150px', // trigger slightly before entering screen
+            threshold: 0.01
           });
 
-          flowVideos.forEach(v => videoObserver.observe(v));
+          if (marqueeContainer) {
+            sectionObserver.observe(marqueeContainer);
+          }
 
           // User interaction fallback in case browser strict autoplay protection blocks playback
           const forceAutoplay = () => {
-            flowVideos.forEach(v => {
-              const rect = v.getBoundingClientRect();
-              const isVisible = (
-                rect.top < window.innerHeight &&
-                rect.bottom > 0 &&
-                rect.left < window.innerWidth &&
-                rect.right > 0
-              );
-              if (isVisible && v.paused) {
-                v.play().catch(() => {});
+            if (marqueeContainer) {
+              const rect = marqueeContainer.getBoundingClientRect();
+              const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+              if (isVisible) {
+                flowVideos.forEach(v => {
+                  if (v.paused) v.play().catch(() => {});
+                });
+                if (marqueeTrack) {
+                  marqueeTrack.style.animationPlayState = 'running';
+                }
               }
-            });
+            }
             // Cleanup listeners after first interaction
             window.removeEventListener('touchstart', forceAutoplay);
             window.removeEventListener('pointerdown', forceAutoplay);
