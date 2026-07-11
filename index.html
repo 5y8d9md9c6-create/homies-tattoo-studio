@@ -3684,6 +3684,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3697,6 +3698,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3710,6 +3712,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3723,6 +3726,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3736,6 +3740,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3749,6 +3754,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3766,6 +3772,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3779,6 +3786,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3792,6 +3800,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3805,6 +3814,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3818,6 +3828,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3831,6 +3842,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3844,15 +3856,69 @@
       <script>
         document.addEventListener('DOMContentLoaded', () => {
           const flowVideos = document.querySelectorAll('.contact-video-card video');
+          
+          // Force mute attributes in JavaScript for secure iOS Autoplay compatibility
           flowVideos.forEach(v => {
+            v.muted = true;
+            v.defaultMuted = true;
             v.addEventListener('error', () => {
               console.error('VIDEO LOAD ERROR:', v.currentSrc, v.error);
             });
-            // Autoplay safety play trigger
-            v.play().catch(err => {
-              console.warn('Autoplay prevented or video not ready:', v.currentSrc, err);
-            });
           });
+
+          // High-Performance IntersectionObserver for individual videos (reduces CPU/decode load on mobile)
+          const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              const video = entry.target;
+              if (entry.isIntersecting) {
+                // Play only when visible on screen
+                if (video.readyState >= 2) {
+                  video.play().catch(() => {});
+                } else {
+                  const playOnLoad = () => {
+                    video.play().catch(() => {});
+                    video.removeEventListener('canplay', playOnLoad);
+                    video.removeEventListener('loadeddata', playOnLoad);
+                  };
+                  video.addEventListener('canplay', playOnLoad);
+                  video.addEventListener('loadeddata', playOnLoad);
+                }
+              } else {
+                // Pause instantly when scrolled out of view to free hardware decoder resources
+                video.pause();
+              }
+            });
+          }, {
+            root: null, // relative to device viewport
+            rootMargin: '100px', // start decoding/playing slightly before entering viewport
+            threshold: 0.05
+          });
+
+          flowVideos.forEach(v => videoObserver.observe(v));
+
+          // User interaction fallback in case browser strict autoplay protection blocks playback
+          const forceAutoplay = () => {
+            flowVideos.forEach(v => {
+              const rect = v.getBoundingClientRect();
+              const isVisible = (
+                rect.top < window.innerHeight &&
+                rect.bottom > 0 &&
+                rect.left < window.innerWidth &&
+                rect.right > 0
+              );
+              if (isVisible && v.paused) {
+                v.play().catch(() => {});
+              }
+            });
+            // Cleanup listeners after first interaction
+            window.removeEventListener('touchstart', forceAutoplay);
+            window.removeEventListener('pointerdown', forceAutoplay);
+            window.removeEventListener('scroll', forceAutoplay);
+          };
+
+          window.addEventListener('touchstart', forceAutoplay, { passive: true });
+          window.addEventListener('pointerdown', forceAutoplay, { passive: true });
+          window.addEventListener('scroll', forceAutoplay, { passive: true });
         });
       </script>
 
