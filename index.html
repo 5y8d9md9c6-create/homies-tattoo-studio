@@ -3684,6 +3684,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3697,6 +3698,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3710,6 +3712,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3723,6 +3726,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3736,6 +3740,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3749,6 +3754,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3766,6 +3772,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3779,6 +3786,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3792,6 +3800,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3805,6 +3814,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3818,6 +3828,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3831,6 +3842,7 @@
                 muted
                 loop
                 playsinline
+                webkit-playsinline
                 preload="metadata"
                 class="w-full h-full object-cover"
               ></video>
@@ -3844,15 +3856,86 @@
       <script>
         document.addEventListener('DOMContentLoaded', () => {
           const flowVideos = document.querySelectorAll('.contact-video-card video');
+          const marqueeContainer = document.querySelector('.contact-video-flow');
+          const marqueeTrack = document.querySelector('.contact-video-track');
+          
+          // Force mute attributes in JavaScript for secure iOS Autoplay compatibility
           flowVideos.forEach(v => {
+            v.muted = true;
+            v.defaultMuted = true;
             v.addEventListener('error', () => {
               console.error('VIDEO LOAD ERROR:', v.currentSrc, v.error);
             });
-            // Autoplay safety play trigger
-            v.play().catch(err => {
-              console.warn('Autoplay prevented or video not ready:', v.currentSrc, err);
-            });
           });
+
+          // Single IntersectionObserver for the entire marquee container (prevents intermediate pausing)
+          const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                // Play all videos in the track
+                flowVideos.forEach(v => {
+                  if (v.readyState >= 2) {
+                    v.play().catch(() => {});
+                  } else {
+                    const playOnLoad = () => {
+                      v.play().catch(() => {});
+                      v.removeEventListener('canplay', playOnLoad);
+                      v.removeEventListener('loadeddata', playOnLoad);
+                    };
+                    v.addEventListener('canplay', playOnLoad);
+                    v.addEventListener('loadeddata', playOnLoad);
+                  }
+                });
+                
+                // Ensure marquee runs
+                if (marqueeTrack) {
+                  marqueeTrack.style.animationPlayState = 'running';
+                }
+              } else {
+                // Pause all videos when entire contact section leaves screen
+                flowVideos.forEach(v => {
+                  v.pause();
+                });
+                
+                // Pause marquee animation to save resources when completely off-screen
+                if (marqueeTrack) {
+                  marqueeTrack.style.animationPlayState = 'paused';
+                }
+              }
+            });
+          }, {
+            root: null, // relative to device viewport
+            rootMargin: '150px', // trigger slightly before entering screen
+            threshold: 0.01
+          });
+
+          if (marqueeContainer) {
+            sectionObserver.observe(marqueeContainer);
+          }
+
+          // User interaction fallback in case browser strict autoplay protection blocks playback
+          const forceAutoplay = () => {
+            if (marqueeContainer) {
+              const rect = marqueeContainer.getBoundingClientRect();
+              const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+              if (isVisible) {
+                flowVideos.forEach(v => {
+                  if (v.paused) v.play().catch(() => {});
+                });
+                if (marqueeTrack) {
+                  marqueeTrack.style.animationPlayState = 'running';
+                }
+              }
+            }
+            // Cleanup listeners after first interaction
+            window.removeEventListener('touchstart', forceAutoplay);
+            window.removeEventListener('pointerdown', forceAutoplay);
+            window.removeEventListener('scroll', forceAutoplay);
+          };
+
+          window.addEventListener('touchstart', forceAutoplay, { passive: true });
+          window.addEventListener('pointerdown', forceAutoplay, { passive: true });
+          window.addEventListener('scroll', forceAutoplay, { passive: true });
         });
       </script>
 
