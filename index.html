@@ -2104,60 +2104,12 @@
       }
 
 
-      /* Force correct layered stacking z-indices to prevent mobile Safari clipping/hiding real_diamond.png */
-      .glass-case-card > div:first-child {
-        z-index: 2 !important; /* Interior Cabinet Container */
-        transform-style: preserve-3d !important;
-      }
-      .glass-case-card div:has(> img.inner-garment) {
-        z-index: 5 !important;
-        position: relative;
-        transform: translateZ(10px) !important;
-        transform-style: preserve-3d !important;
-      }
-      .glass-case-card img.inner-garment {
-        z-index: 6 !important;
-        position: relative;
-        transform: translateZ(15px) !important;
-        transform-style: preserve-3d !important;
-        will-change: filter, transform;
-        transition: filter 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-        filter: brightness(0.65) contrast(1.1) drop-shadow(0 0 3px rgba(255, 255, 255, 0.3)) !important;
-      }
-      .glass-case-container.case-open img.inner-garment {
-        filter: brightness(1.2) contrast(1.05) drop-shadow(0 0 12px rgba(255, 255, 255, 0.85)) !important;
-      }
-      
-      /* Simplify keyframe animation to animate opacity only, preventing Safari compositor rendering glitch */
-      @keyframes diamondSparkle {
-        0%, 100% {
-          opacity: 0.6;
-        }
-        50% {
-          opacity: 0.95;
-        }
-      }
-      
-      .glass-door {
-        z-index: 15 !important; /* Glass swing layer is above interior but below text/knobs */
-      }
-      .case-label {
-        z-index: 20 !important; /* Label text details above the glass door */
-      }
-      .antique-brass-knob {
-        z-index: 25 !important; /* Knob layer is on the top of the door frame */
-      }
-
-
-
-
-      /* Mobile Pseudo-Element Diamond Fallback */
-      .glass-case-container {
-        position: relative;
-        isolation: isolate;
-      }
-
+      /* Mobile Pseudo-Element Diamond Fallback (Strictly Mobile Only) */
       @media (max-width: 767px) {
+        .glass-case-container {
+          position: relative;
+          isolation: isolate;
+        }
         .glass-case-container::after {
           content: "";
           position: absolute;
@@ -2177,12 +2129,10 @@
           filter: none;
           animation: none;
         }
-        
         .inner-garment {
           display: none !important;
         }
-
-        /* Enforce knob rendering above the pseudo-element diamond */
+        /* Enforce knob rendering above the pseudo-element diamond on mobile viewports */
         .antique-brass-knob {
           z-index: 10000 !important;
         }
