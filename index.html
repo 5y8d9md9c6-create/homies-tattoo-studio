@@ -2149,31 +2149,43 @@
       }
 
 
-      /* Mobile Apparel Diamond Overrides */
-      .mobile-apparel-diamond {
-        display: none;
+
+
+      /* Mobile Pseudo-Element Diamond Fallback */
+      .glass-case-container {
+        position: relative;
+        isolation: isolate;
       }
+
       @media (max-width: 767px) {
-        .mobile-apparel-diamond {
-          display: block;
+        .glass-case-container::after {
+          content: "";
           position: absolute;
           left: 50%;
-          top: 48%;
-          width: clamp(72px, 28vw, 120px);
-          height: auto;
+          top: 46%;
+          width: 42%;
+          aspect-ratio: 1 / 1;
           transform: translate(-50%, -50%);
-          opacity: 0.9;
-          z-index: 12;
+          background-image: url("./real_diamond.png");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+          opacity: 1;
+          z-index: 9999;
           pointer-events: none;
-          object-fit: contain;
+          display: block;
+          filter: none;
+          animation: none;
         }
+        
         .inner-garment {
           display: none !important;
         }
-      }
-      .glass-case-container.case-open .mobile-apparel-diamond {
-        transform: translate(-50%, -50%) scale(1.04);
-        transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+
+        /* Enforce knob rendering above the pseudo-element diamond */
+        .antique-brass-knob {
+          z-index: 10000 !important;
+        }
       }
 
       /* Title Diamond Sparkle Animation */
@@ -2311,8 +2323,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2393,8 +2403,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2475,8 +2483,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2557,8 +2563,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2638,8 +2642,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2720,8 +2722,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2802,8 +2802,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -2883,8 +2881,6 @@
                   </svg>
                 </div>
               </div>
-              <!-- Mobile-only stable diamond layer -->
-              <img src="real_diamond.png" alt="" class="mobile-apparel-diamond" aria-hidden="true">
             </div>
           </div>
         </div>
@@ -4042,8 +4038,8 @@
         </p>
       </div>
 
-      <!-- Booking Methods (2 Cards) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-[700px] mb-16 mx-auto">
+      <!-- Booking Methods (1 Card) -->
+      <div class="w-full max-w-[340px] mb-16 mx-auto">
         <!-- Instagram card -->
         <a href="https://www.instagram.com/tattoo_homies_9000/" target="_blank" rel="noopener noreferrer" class="group relative p-6 border border-[#bba370]/15 bg-[#121211]/50 hover:border-[#bba370]/70 hover:shadow-[0_0_20px_rgba(187,163,112,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center rounded-sm">
           <div class="w-10 h-10 flex items-center justify-center text-[#bba370] mb-4 group-hover:scale-105 transition-transform duration-300">
@@ -4052,16 +4048,6 @@
           <h3 class="font-sans text-sm font-bold text-zinc-200 mb-1.5">Instagram予約</h3>
           <p class="text-zinc-400 text-[11px] leading-relaxed font-sans mb-0.5">DMから受付</p>
           <p class="text-zinc-400 text-[11px] leading-relaxed font-sans">作品相談も可能</p>
-        </a>
-
-        <!-- Telephone card -->
-        <a href="tel:0477111234" class="group relative p-6 border border-[#bba370]/15 bg-[#121211]/50 hover:border-[#bba370]/70 hover:shadow-[0_0_20px_rgba(187,163,112,0.15)] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center rounded-sm">
-          <div class="w-10 h-10 flex items-center justify-center text-[#bba370] mb-4 group-hover:scale-105 transition-transform duration-300">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
-          </div>
-          <h3 class="font-sans text-sm font-bold text-zinc-200 mb-1.5">お電話</h3>
-          <p class="text-zinc-400 text-[11px] leading-relaxed font-sans mb-0.5">営業時間内受付</p>
-          <p class="text-zinc-400 text-[11px] leading-relaxed font-sans">当日相談も可能</p>
         </a>
       </div>
 
@@ -5430,7 +5416,7 @@
             <p><span class="text-zinc-500 inline-block w-20">OPEN / </span>11:00 〜 20:00</p>
             <p><span class="text-zinc-500 inline-block w-20">CLOSED / </span>不定休 (Irregular Holidays)</p>
             <p><span class="text-zinc-500 inline-block w-20">ADDRESS / </span>千葉県市川市末広1-10-4 シャトーガーデン102</p>
-            <p><span class="text-zinc-500 inline-block w-20">TEL / </span>047-711-1234</p>
+
           </div>
         </div>
 
