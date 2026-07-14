@@ -4109,6 +4109,17 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
+              <label class="block text-[10px] tracking-wider text-zinc-400 uppercase mb-1.5 font-cinzel">Email / メールアドレス *</label>
+              <input type="email" id="input-email" required oninput="updateFormProgress()" class="contact-form-input w-full py-2.5 px-3.5 rounded-sm" placeholder="example@ainocreator.jp">
+            </div>
+            <div>
+              <label class="block text-[10px] tracking-wider text-zinc-400 uppercase mb-1.5 font-cinzel">Phone / 電話番号</label>
+              <input type="tel" id="input-tel" oninput="updateFormProgress()" class="contact-form-input w-full py-2.5 px-3.5 rounded-sm" placeholder="090-0000-0000">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
               <label class="block text-[10px] tracking-wider text-zinc-400 uppercase mb-1.5 font-cinzel">Desired Artist / 希望アーティスト *</label>
               <select id="input-artist" required onchange="updateFormProgress()" class="contact-form-input w-full py-2.5 px-3.5 rounded-sm bg-[#0C0C0B]">
                 <option value="">選択してください</option>
@@ -4162,6 +4173,8 @@
       const inputs = [
         document.getElementById('input-name'),
         document.getElementById('input-age'),
+        document.getElementById('input-email'),
+        document.getElementById('input-tel'),
         document.getElementById('input-artist'),
         document.getElementById('input-placement'),
         document.getElementById('input-size'),
@@ -4202,11 +4215,49 @@
       }
     }
 
-    function handleBookingSubmit(e) {
+    async function handleBookingSubmit(e) {
       e.preventDefault();
-      alert("ご予約・ご相談のご入力をありがとうございました。\n（デモ画面のため、実際の送信は行われません）");
-      e.target.reset();
-      updateFormProgress();
+      
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '💎 送信中...';
+      
+      const data = {
+        name: document.getElementById('input-name').value,
+        age: document.getElementById('input-age').value,
+        email: document.getElementById('input-email').value,
+        tel: document.getElementById('input-tel').value,
+        artist: document.getElementById('input-artist').value,
+        placement: document.getElementById('input-placement').value,
+        size: document.getElementById('input-size').value,
+        datetime: document.getElementById('input-datetime').value,
+        concept: document.getElementById('input-concept').value
+      };
+      
+      try {
+        const response = await fetch('/api/send', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        if (response.ok && result.success) {
+          alert("お問い合わせの送信が完了いたしました。内容を確認の上、ご連絡差し上げます。");
+          e.target.reset();
+          updateFormProgress();
+        } else {
+          alert("送信に失敗しました: " + (result.error || "時間をおいて再度お試しください。"));
+        }
+      } catch (err) {
+        alert("通信エラーが発生しました: " + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
     }
 
     // Particle animation system for transformation phase
