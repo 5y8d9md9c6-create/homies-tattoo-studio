@@ -4106,7 +4106,12 @@
           <div class="w-16 h-[1px] bg-gold/20 mx-auto mt-3.5"></div>
         </div>
 
-        <form id="booking-request-form" onsubmit="handleBookingSubmit(event)" class="space-y-5 text-left relative z-10">
+        <form id="booking-request-form" action="https://formsubmit.co/daiamondfam123@gmail.com" method="POST" onsubmit="handleBookingSubmit(event)" class="space-y-5 text-left relative z-10">
+          <!-- FormSubmit Configuration -->
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_subject" value="【HOMIES】新しいお問い合わせ">
+          <input type="text" name="_honey" style="display:none">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
               <label class="block text-[10px] tracking-wider text-zinc-400 uppercase mb-1.5 font-cinzel">Name / お名前 *</label>
@@ -4230,11 +4235,22 @@
       e.preventDefault();
       
       const submitBtn = e.target.querySelector('button[type="submit"]');
+      
+      // Honeypot check for spam protection
+      const honeyVal = e.target.querySelector('input[name="_honey"]').value;
+      if (honeyVal) {
+        console.warn("Spam submission blocked.");
+        return;
+      }
+
       const originalText = submitBtn.innerHTML;
       submitBtn.disabled = true;
       submitBtn.innerHTML = '💎 送信中...';
       
-      const data = {
+      const payload = {
+        _captcha: "false",
+        _template: "table",
+        _subject: "【HOMIES】新しいお問い合わせ",
         name: document.getElementById('input-name').value,
         age: document.getElementById('input-age').value,
         email: document.getElementById('input-email').value,
@@ -4243,25 +4259,27 @@
         placement: document.getElementById('input-placement').value,
         size: document.getElementById('input-size').value,
         datetime: document.getElementById('input-datetime').value,
-        concept: document.getElementById('input-concept').value
+        concept: document.getElementById('input-concept').value,
+        _replyto: document.getElementById('input-email').value
       };
       
       try {
-        const response = await fetch('/api/send', {
+        const response = await fetch('https://formsubmit.co/ajax/daiamondfam123@gmail.com', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(payload)
         });
         
         const result = await response.json();
-        if (response.ok && result.success) {
+        if (response.ok && (result.success === "true" || result.success === true)) {
           alert("お問い合わせの送信が完了いたしました。内容を確認の上、ご連絡差し上げます。");
           e.target.reset();
           updateFormProgress();
         } else {
-          alert("送信に失敗しました: " + (result.error || "時間をおいて再度お試しください。"));
+          alert("送信に失敗しました: " + (result.message || "時間をおいて再度お試しください。"));
         }
       } catch (err) {
         alert("通信エラーが発生しました: " + err.message);
