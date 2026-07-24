@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://homies-tattoo-studio.pages.dev/sitemap-v2.xml
+Sitemap: https://tattoostudiohomies.com/sitemap.xml
